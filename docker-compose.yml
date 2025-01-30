@@ -39,19 +39,14 @@ services:
 
   print-volumes:
     image: busybox
-    command: >
-      sh -c "echo 'TeamCity Server Data: /data/teamcity_server/datadir'; 
-             echo 'TeamCity Server Logs: /opt/teamcity/logs'; 
-             echo 'MySQL Data: /var/lib/mysql'; 
-             echo 'MySQL Init: /docker-entrypoint-initdb.d'; 
-             echo 'TeamCity Agent Config: /data/teamcity_agent/conf'; 
-             sleep 3600"
     volumes:
       - teamcity-server-data:/data/teamcity_server/datadir
       - teamcity-server-logs:/opt/teamcity/logs
       - mysql-data:/var/lib/mysql
       - ./mysql-init:/docker-entrypoint-initdb.d
       - teamcity-agent-config:/data/teamcity_agent/conf
+      - ./print-volumes.sh:/print-volumes.sh
+    entrypoint: /print-volumes.sh
 
   cleanup-volumes:
     image: busybox
