@@ -31,7 +31,7 @@ docker-compose up teamcity-agent # This will run the pulling and installation of
 Check if the pulling process is done. To confirm if the installation of the TeamCity agent is completed, click on the tab on the right side and click "Agent". You will be asked to confirm the agent.
 
 Then you are done with the installation.
-
+You can now use TeamCity as your CICD Tools.
 
 
 
