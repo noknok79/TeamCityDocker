@@ -1,0 +1,5 @@
+CREATE DATABASE IF NOT EXISTS teamcity;
+CREATE USER IF NOT EXISTS 'teamcity'@'%' IDENTIFIED BY 'teamcity_password';
+GRANT ALL PRIVILEGES ON teamcity.* TO 'teamcity'@'%';
+FLUSH PRIVILEGES;
+

@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: teamcity
+      MYSQL_USER: teamcity
+      MYSQL_PASSWORD: teamcitypassword
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  teamcity-server:
+    image: jetbrains/teamcity-server:latest
+    environment:
+      TEAMCITY_SERVER_MEM_OPTS: -Xmx1g -XX:MaxPermSize=270m
+    ports:
+      - "8111:8111"
+    volumes:
+      - teamcity-server-data:/data/teamcity_server/datadir
+      - teamcity-logs:/opt/teamcity/logs
+    depends_on:
+      - mysql
+
+  teamcity-agent:
+    image: jetbrains/teamcity-agent:latest
+    environment:
+      SERVER_URL: http://teamcity-server:8111
+    volumes:
+      - teamcity-agent-conf:/data/teamcity_agent/conf
+    depends_on:
+      - teamcity-server
+    entrypoint: ["sh", "-c", "/wait-for-it.sh teamcity-server:8111 -- /run-agent.sh"]
+
+volumes:
+  mysql-data:
+  teamcity-server-data:
+  teamcity-logs:
+  teamcity-agent-conf:
+
