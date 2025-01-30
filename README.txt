@@ -1,3 +1,41 @@
+To install TeamCity, please follow these steps:
+
+**Pre-requisite:** All requirements such as Docker and docker-compose are presumed to be installed.
+
+**Step 1.** 
+```bash
+docker-compose up teamcity-server # Run the pulling and installation of TeamCity server images
+```
+To access the TeamCity GUI, open a browser and go to [http://localhost:8111](http://localhost:8111)
+
+Proceed to the wizard. In the Database selection, choose MySQL. But before you proceed, you must run the MySQL service:
+```bash
+docker-compose up mysql # This will run the pulling and installation of MySQL as the database for TeamCity.
+```
+Once MySQL is running, proceed to select MySQL in the browser. It will continue with the setup and installation of TeamCity.
+
+Next, you need to run the `print-volumes` service to check the IP address of your MySQL, which is required for the installation of MySQL as your database for TeamCity:
+```bash
+docker-compose up print-volumes # Copy the IP address of MySQL, which will be required for connecting MySQL as your database.
+```
+On the page for connecting to MySQL, please check the `docker-compose.yml` file for login details such as `mysql_database`, `mysql_user`, `mysql_password`, and the destination (IP address of MySQL).
+
+Proceed to connect.
+
+To check if TeamCity has been successfully set up, log in. Return to the CLI where you ran the teamcity-server; it will generate an authorization token to be used for the creation of an admin login.
+
+If you have confirmed that you have successfully finished the setup of the TeamCity server, you need to run the TeamCity-Agent service:
+```bash
+docker-compose up teamcity-agent # This will run the pulling and installation of the TeamCity agent, which is required.
+```
+Check if the pulling process is done. To confirm if the installation of the TeamCity agent is completed, click on the tab on the right side and click "Agent". You will be asked to confirm the agent.
+
+Then you are done with the installation.
+
+
+
+
+
 version: '3.8' # Specifies the version of the Docker Compose file format to use.
 
 services: 
