@@ -1,41 +1,69 @@
 version: '3.8'
 
 services:
-  mysql:
-    image: mysql:latest
-    environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: teamcity
-      MYSQL_USER: teamcity
-      MYSQL_PASSWORD: teamcitypassword
-    volumes:
-      - mysql-data:/var/lib/mysql
-
   teamcity-server:
-    image: jetbrains/teamcity-server:latest
-    environment:
-      TEAMCITY_SERVER_MEM_OPTS: -Xmx1g -XX:MaxPermSize=270m
+    image: jetbrains/teamcity-server
+    container_name: teamcity-server
     ports:
       - "8111:8111"
     volumes:
       - teamcity-server-data:/data/teamcity_server/datadir
-      - teamcity-logs:/opt/teamcity/logs
-    depends_on:
-      - mysql
+      - teamcity-server-logs:/opt/teamcity/logs
+    environment:
+      - TEAMCITY_SERVER_MEM_OPTS=-Xmx2g -XX:ReservedCodeCacheSize=350m
+
+  mysql:
+    image: mysql:latest
+    container_name: mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: teamcity
+      MYSQL_USER: teamcity
+      MYSQL_PASSWORD: teamcity_password
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./mysql-init:/docker-entrypoint-initdb.d
+      - ./mysql-entrypoint.sh:/docker-entrypoint.sh
 
   teamcity-agent:
-    image: jetbrains/teamcity-agent:latest
+    image: jetbrains/teamcity-agent
+    container_name: teamcity-agent
     environment:
-      SERVER_URL: http://teamcity-server:8111
+      - SERVER_URL=http://teamcity-server:8111
     volumes:
-      - teamcity-agent-conf:/data/teamcity_agent/conf
+      - teamcity-agent-config:/data/teamcity_agent/conf
     depends_on:
       - teamcity-server
-    entrypoint: ["sh", "-c", "/wait-for-it.sh teamcity-server:8111 -- /run-agent.sh"]
+
+  print-volumes:
+    image: busybox
+    volumes:
+      - teamcity-server-data:/data/teamcity_server/datadir
+      - teamcity-server-logs:/opt/teamcity/logs
+      - mysql-data:/var/lib/mysql
+      - ./mysql-init:/docker-entrypoint-initdb.d
+      - teamcity-agent-config:/data/teamcity_agent/conf
+      - ./print-volumes.sh:/print-volumes.sh
+    entrypoint: /print-volumes.sh
+
+  cleanup-volumes:
+    image: busybox
+    command: >
+      sh -c "echo 'Cleaning up local volume storage...'; 
+             rm -rf /data/teamcity_server/datadir /opt/teamcity/logs /var/lib/mysql /docker-entrypoint-initdb.d /data/teamcity_agent/conf; 
+             sleep 3600"
+    volumes:
+      - teamcity-server-data:/data/teamcity_server/datadir
+      - teamcity-server-logs:/opt/teamcity/logs
+      - mysql-data:/var/lib/mysql
+      - ./mysql-init:/docker-entrypoint-initdb.d
+      - teamcity-agent-config:/data/teamcity_agent/conf
 
 volumes:
-  mysql-data:
   teamcity-server-data:
-  teamcity-logs:
-  teamcity-agent-conf:
+  teamcity-server-logs:
+  mysql-data:
+  teamcity-agent-config:
 

@@ -1,0 +1,171 @@
+[2025-01-31 12:55:26,219]   INFO -  jetbrains.buildServer.STARTUP - Path to the startup configuration file: /opt/teamcity/bin/../conf/teamcity-startup.properties
+[2025-01-31 12:55:26,359]   INFO -   jetbrains.buildServer.SERVER - Using logs directory "/opt/teamcity/logs"
+[2025-01-31 12:55:26,424]   INFO -  jetbrains.buildServer.STARTUP - 
+
+
+
+
+
+
+[2025-01-31 12:55:26,425]   INFO -  jetbrains.buildServer.STARTUP - ===========================================================
+[2025-01-31 12:55:26,425]   INFO -  jetbrains.buildServer.STARTUP - Starting TeamCity server
+[2025-01-31 12:55:26,561]   INFO -  jetbrains.buildServer.STARTUP - TeamCity version: 2024.12.1 (build 174458), data format version 1014
+[2025-01-31 12:55:26,564]   INFO -  jetbrains.buildServer.STARTUP - OS: Linux, version 5.15.167.4-microsoft-standard-WSL2, amd64, Current user: tcuser, Time zone: GMT (UTC)
+[2025-01-31 12:55:26,564]   INFO -  jetbrains.buildServer.STARTUP - Java: 17.0.7, OpenJDK 64-Bit Server VM (17.0.7+7-LTS, mixed mode, sharing), OpenJDK Runtime Environment (17.0.7+7-LTS), Amazon.com Inc.; JVM parameters: --add-opens=jdk.management/com.sun.management.internal=ALL-UNNAMED -XX:+IgnoreUnrecognizedVMOptions -Djava.security.manager=allow --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.io=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/java.util.concurrent=ALL-UNNAMED --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED -Djava.util.logging.config.file=/opt/teamcity/conf/logging.properties -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager -Djdk.tls.ephemeralDHKeySize=2048 -Djava.protocol.handler.pkgs=org.apache.catalina.webresources -Dorg.apache.catalina.security.SecurityListener.UMASK=0027 -Xmx2g -XX:ReservedCodeCacheSize=640m -Dteamcity.configuration.path=../conf/teamcity-startup.properties -Dlog4j2.configurationFile=file:/opt/teamcity/bin/../conf/teamcity-server-log4j.xml -Dteamcity_logs=/opt/teamcity/bin/../logs -Djava.awt.headless=true -Dignore.endorsed.dirs= -Dcatalina.base=/opt/teamcity -Dcatalina.home=/opt/teamcity -Djava.io.tmpdir=/opt/teamcity/temp
+[2025-01-31 12:55:26,566]   INFO -  jetbrains.buildServer.STARTUP - Garbage collection: G1 Young Generation, G1 Old Generation
+[2025-01-31 12:55:26,566]   INFO -  jetbrains.buildServer.STARTUP - Web server version: Apache Tomcat/9.0.98
+[2025-01-31 12:55:26,568]   INFO -  jetbrains.buildServer.STARTUP - Server IP addresses: 172.23.0.2
+[2025-01-31 12:55:26,569]   INFO -  jetbrains.buildServer.STARTUP - Web server ports: 8111 (protocol: HTTP/1.1, scheme: http), 8105 (shutdown port)
+[2025-01-31 12:55:26,569]   INFO -  jetbrains.buildServer.STARTUP - Context path: "/", servlet real path: "/opt/teamcity/webapps/ROOT"
+[2025-01-31 12:55:26,573]   INFO -  jetbrains.buildServer.STARTUP - TeamCity distribution type: docker-ubuntu
+[2025-01-31 12:55:26,584]   INFO -  jetbrains.buildServer.STARTUP - TeamCity server node id: MAIN_SERVER
+[2025-01-31 12:55:26,586]   INFO -  jetbrains.buildServer.STARTUP - Version file lock was successfully obtained: /opt/teamcity/webapps/ROOT/BUILD_174458
+[2025-01-31 12:55:26,594]   INFO -  jetbrains.buildServer.STARTUP - Current stage: Looking for the TeamCity Data Directory
+[2025-01-31 12:55:26,594]   INFO -  jetbrains.buildServer.STARTUP - The TeamCity Data Directory path is determined using the environment variable TEAMCITY_DATA_PATH
+[2025-01-31 12:55:26,600]   INFO -  jetbrains.buildServer.STARTUP - The TeamCity Data Directory "/data/teamcity_server/datadir" exists
+[2025-01-31 12:55:26,600]   INFO -  jetbrains.buildServer.STARTUP - Asking user to confirm first start with the predefined TeamCity Data Directory path
+[2025-01-31 12:55:26,600]   INFO -  jetbrains.buildServer.STARTUP - Startup confirmation is required. Open TeamCity web page in the browser. Server is running at http://localhost:8111
+[2025-01-31 12:55:26,600]   INFO -  jetbrains.buildServer.STARTUP - Current stage: Confirming TeamCity first start (administrator login is required to proceed)
+[2025-01-31 12:55:42,845]   INFO -  jetbrains.buildServer.STARTUP - Current stage: Initializing the TeamCity Data Directory
+[2025-01-31 12:55:42,848]   INFO -  jetbrains.buildServer.STARTUP - Node specific data directory location: /data/teamcity_server/datadir
+[2025-01-31 12:55:42,848]   INFO -  jetbrains.buildServer.STARTUP - The TeamCity server caches directory is set to the path: /data/teamcity_server/datadir/system/caches
+[2025-01-31 12:55:42,866]   INFO - er.https.HttpsConfiguratorImpl - Https is not configured.
+[2025-01-31 12:55:43,027]   INFO -  jetbrains.buildServer.STARTUP - Downloading JDBC driver metadata from <https://download.jetbrains.com/teamcity/database-drivers/2024.12.xml?myVersion=2024.12.1&javaVersion=17.0.7>...
+[2025-01-31 12:55:44,136]   INFO -  jetbrains.buildServer.STARTUP - Current stage: Setting up database connection (administrator login is required to proceed)
+[2025-01-31 12:56:00,309]   INFO -  jetbrains.buildServer.STARTUP - Current stage: Downloading JDBC drivers
+[2025-01-31 12:56:00,335]   INFO -  jetbrains.buildServer.STARTUP - Downloading mysql JDBC driver...
+[2025-01-31 12:56:02,631]   INFO -  jetbrains.buildServer.STARTUP - Successfully downloaded mysql JDBC driver.
+[2025-01-31 12:56:02,632]   INFO -  jetbrains.buildServer.STARTUP - JDBC loader: loading JDBC drivers (for the first time)
+[2025-01-31 12:56:02,641]   INFO -  jetbrains.buildServer.STARTUP - Current stage: Setting up database connection (administrator login is required to proceed)
+[2025-01-31 12:58:04,004]   INFO -  jetbrains.buildServer.STARTUP - Server shutdown event received
+[2025-01-31 12:58:04,004]   INFO -  jetbrains.buildServer.STARTUP - Current stage: TeamCity server is shutting down
+[2025-01-31 12:58:04,005]   INFO -  jetbrains.buildServer.STARTUP - Stopping the main application
+[2025-01-31 12:58:04,005]   INFO -  jetbrains.buildServer.STARTUP - The main servlet is not initialized, nothing to shut down.
+[2025-01-31 12:58:04,006]   INFO -  jetbrains.buildServer.STARTUP - Version file lock was released: /opt/teamcity/webapps/ROOT/BUILD_174458
+[2025-01-31 12:58:04,014]   INFO -  jetbrains.buildServer.STARTUP - Server shutdown complete. Uptime was 2m:37s
+[2025-01-31 12:58:32,393]   INFO -  jetbrains.buildServer.STARTUP - Path to the startup configuration file: /opt/teamcity/bin/../conf/teamcity-startup.properties
+[2025-01-31 12:58:32,508]   INFO -   jetbrains.buildServer.SERVER - Using logs directory "/opt/teamcity/logs"
+[2025-01-31 12:58:32,561]   INFO -  jetbrains.buildServer.STARTUP - 
+
+
+
+
+
+
+[2025-01-31 12:58:32,562]   INFO -  jetbrains.buildServer.STARTUP - ===========================================================
+[2025-01-31 12:58:32,562]   INFO -  jetbrains.buildServer.STARTUP - Starting TeamCity server
+[2025-01-31 12:58:32,670]   INFO -  jetbrains.buildServer.STARTUP - TeamCity version: 2024.12.1 (build 174458), data format version 1014
+[2025-01-31 12:58:32,674]   INFO -  jetbrains.buildServer.STARTUP - OS: Linux, version 5.15.167.4-microsoft-standard-WSL2, amd64, Current user: tcuser, Time zone: GMT (UTC)
+[2025-01-31 12:58:32,675]   INFO -  jetbrains.buildServer.STARTUP - Java: 17.0.7, OpenJDK 64-Bit Server VM (17.0.7+7-LTS, mixed mode, sharing), OpenJDK Runtime Environment (17.0.7+7-LTS), Amazon.com Inc.; JVM parameters: --add-opens=jdk.management/com.sun.management.internal=ALL-UNNAMED -XX:+IgnoreUnrecognizedVMOptions -Djava.security.manager=allow --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.io=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/java.util.concurrent=ALL-UNNAMED --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED -Djava.util.logging.config.file=/opt/teamcity/conf/logging.properties -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager -Djdk.tls.ephemeralDHKeySize=2048 -Djava.protocol.handler.pkgs=org.apache.catalina.webresources -Dorg.apache.catalina.security.SecurityListener.UMASK=0027 -Xmx2g -XX:ReservedCodeCacheSize=640m -Dteamcity.configuration.path=../conf/teamcity-startup.properties -Dlog4j2.configurationFile=file:/opt/teamcity/bin/../conf/teamcity-server-log4j.xml -Dteamcity_logs=/opt/teamcity/bin/../logs -Djava.awt.headless=true -Dignore.endorsed.dirs= -Dcatalina.base=/opt/teamcity -Dcatalina.home=/opt/teamcity -Djava.io.tmpdir=/opt/teamcity/temp
+[2025-01-31 12:58:32,677]   INFO -  jetbrains.buildServer.STARTUP - Garbage collection: G1 Young Generation, G1 Old Generation
+[2025-01-31 12:58:32,677]   INFO -  jetbrains.buildServer.STARTUP - Web server version: Apache Tomcat/9.0.98
+[2025-01-31 12:58:32,679]   INFO -  jetbrains.buildServer.STARTUP - Server IP addresses: 172.23.0.2
+[2025-01-31 12:58:32,681]   INFO -  jetbrains.buildServer.STARTUP - Web server ports: 8111 (protocol: HTTP/1.1, scheme: http), 8105 (shutdown port)
+[2025-01-31 12:58:32,681]   INFO -  jetbrains.buildServer.STARTUP - Context path: "/", servlet real path: "/opt/teamcity/webapps/ROOT"
+[2025-01-31 12:58:32,687]   INFO -  jetbrains.buildServer.STARTUP - TeamCity distribution type: docker-ubuntu
+[2025-01-31 12:58:32,713]   INFO -  jetbrains.buildServer.STARTUP - TeamCity server node id: MAIN_SERVER
+[2025-01-31 12:58:32,714]   INFO -  jetbrains.buildServer.STARTUP - Version file lock was successfully obtained: /opt/teamcity/webapps/ROOT/BUILD_174458
+[2025-01-31 12:58:32,727]   INFO -  jetbrains.buildServer.STARTUP - Current stage: Looking for the TeamCity Data Directory
+[2025-01-31 12:58:32,727]   INFO -  jetbrains.buildServer.STARTUP - The TeamCity Data Directory path is determined using the environment variable TEAMCITY_DATA_PATH
+[2025-01-31 12:58:32,734]   INFO -  jetbrains.buildServer.STARTUP - The TeamCity Data Directory "/data/teamcity_server/datadir" exists
+[2025-01-31 12:58:32,734]   INFO -  jetbrains.buildServer.STARTUP - Asking user to confirm first start with the predefined TeamCity Data Directory path
+[2025-01-31 12:58:32,742]   INFO -  jetbrains.buildServer.STARTUP - Startup confirmation is required. Open TeamCity web page in the browser. Server is running at http://localhost:8111
+[2025-01-31 12:58:32,742]   INFO -  jetbrains.buildServer.STARTUP - Current stage: Confirming TeamCity first start (administrator login is required to proceed)
+[2025-01-31 12:59:12,267]   INFO -  jetbrains.buildServer.STARTUP - Current stage: Initializing the TeamCity Data Directory
+[2025-01-31 12:59:12,268]   INFO -  jetbrains.buildServer.STARTUP - Node specific data directory location: /data/teamcity_server/datadir
+[2025-01-31 12:59:12,268]   INFO -  jetbrains.buildServer.STARTUP - The TeamCity server caches directory is set to the path: /data/teamcity_server/datadir/system/caches
+[2025-01-31 12:59:12,277]   INFO - er.https.HttpsConfiguratorImpl - Https is not configured.
+[2025-01-31 12:59:12,414]   INFO -  jetbrains.buildServer.STARTUP - Downloading JDBC driver metadata from <https://download.jetbrains.com/teamcity/database-drivers/2024.12.xml?myVersion=2024.12.1&javaVersion=17.0.7>...
+[2025-01-31 12:59:13,602]   INFO -  jetbrains.buildServer.STARTUP - Current stage: Setting up database connection (administrator login is required to proceed)
+[2025-01-31 12:59:15,421]   INFO -  jetbrains.buildServer.STARTUP - JDBC loader: loading JDBC drivers (for the first time)
+[2025-01-31 13:00:12,046]   INFO -  jetbrains.buildServer.STARTUP - Generated JDBC connection string: jdbc:mysql://172.23.0.3/teamcity?user=teamcityuser&password=********
+[2025-01-31 13:00:12,046]   INFO -  jetbrains.buildServer.STARTUP - Current stage: Creating a new database
+[2025-01-31 13:00:12,046]   INFO -  jetbrains.buildServer.STARTUP - Creating a new database
+[2025-01-31 13:00:12,087]   INFO -  jetbrains.buildServer.STARTUP - Effective database connection properties:
+[2025-01-31 13:00:12,087]   INFO -  jetbrains.buildServer.STARTUP - 	allowPublicKeyRetrieval=true [connectionProperties.*]
+[2025-01-31 13:00:12,087]   INFO -  jetbrains.buildServer.STARTUP - 	alwaysSendSetIsolation=false [defaults]
+[2025-01-31 13:00:12,087]   INFO -  jetbrains.buildServer.STARTUP - 	cachePrepStmts=true [defaults]
+[2025-01-31 13:00:12,087]   INFO -  jetbrains.buildServer.STARTUP - 	characterEncoding=UTF-8 [defaults]
+[2025-01-31 13:00:12,087]   INFO -  jetbrains.buildServer.STARTUP - 	elideSetAutoCommits=true [defaults]
+[2025-01-31 13:00:12,088]   INFO -  jetbrains.buildServer.STARTUP - 	noTimezoneConversionForDateType=false [defaults]
+[2025-01-31 13:00:12,088]   INFO -  jetbrains.buildServer.STARTUP - 	noTimezoneConversionForTimeType=false [defaults]
+[2025-01-31 13:00:12,088]   INFO -  jetbrains.buildServer.STARTUP - 	prepStmtCacheSize=300 [defaults]
+[2025-01-31 13:00:12,088]   INFO -  jetbrains.buildServer.STARTUP - 	rewriteBatchedStatements=true [defaults]
+[2025-01-31 13:00:12,088]   INFO -  jetbrains.buildServer.STARTUP - 	serverTimezone=GMT [defaults]
+[2025-01-31 13:00:12,088]   INFO -  jetbrains.buildServer.STARTUP - 	useGmtMillisForDatetimes=true [defaults]
+[2025-01-31 13:00:12,088]   INFO -  jetbrains.buildServer.STARTUP - 	useJDBCCompliantTimezoneShift=true [defaults]
+[2025-01-31 13:00:12,088]   INFO -  jetbrains.buildServer.STARTUP - 	useLegacyDatetimeCode=false [defaults]
+[2025-01-31 13:00:12,088]   INFO -  jetbrains.buildServer.STARTUP - 	useLocalSessionState=true [defaults]
+[2025-01-31 13:00:12,088]   INFO -  jetbrains.buildServer.STARTUP - 	useTimezone=true [defaults]
+[2025-01-31 13:00:12,089]   INFO -  jetbrains.buildServer.STARTUP - 	userServerPrepStmts=true [defaults]
+[2025-01-31 13:00:12,808]  ERROR -  jetbrains.buildServer.STARTUP - MySQL access denied: Access denied for user 'teamcityuser'@'172.23.0.2' (using password: YES): java.sql.SQLException: Access denied for user 'teamcityuser'@'172.23.0.2' (using password: YES)
+[2025-01-31 13:00:12,809]   INFO -  jetbrains.buildServer.STARTUP - Current stage: Setting up database connection (administrator login is required to proceed)
+[2025-01-31 13:03:53,340]   INFO -  jetbrains.buildServer.STARTUP - Current stage: TeamCity server is shutting down
+[2025-01-31 13:03:53,340]   INFO -  jetbrains.buildServer.STARTUP - Server shutdown event received
+[2025-01-31 13:03:53,341]   INFO -  jetbrains.buildServer.STARTUP - Stopping the main application
+[2025-01-31 13:03:53,341]   INFO -  jetbrains.buildServer.STARTUP - The main servlet is not initialized, nothing to shut down.
+[2025-01-31 13:03:53,343]   INFO -  jetbrains.buildServer.STARTUP - Version file lock was released: /opt/teamcity/webapps/ROOT/BUILD_174458
+[2025-01-31 13:03:53,433]   INFO -  jetbrains.buildServer.STARTUP - Server shutdown complete. Uptime was 5m:20s
+[2025-01-31 13:04:20,159]   INFO -  jetbrains.buildServer.STARTUP - Path to the startup configuration file: /opt/teamcity/bin/../conf/teamcity-startup.properties
+[2025-01-31 13:04:20,285]   INFO -   jetbrains.buildServer.SERVER - Using logs directory "/opt/teamcity/logs"
+[2025-01-31 13:04:20,335]   INFO -  jetbrains.buildServer.STARTUP - 
+
+
+
+
+
+
+[2025-01-31 13:04:20,336]   INFO -  jetbrains.buildServer.STARTUP - ===========================================================
+[2025-01-31 13:04:20,336]   INFO -  jetbrains.buildServer.STARTUP - Starting TeamCity server
+[2025-01-31 13:04:20,433]   INFO -  jetbrains.buildServer.STARTUP - TeamCity version: 2024.12.1 (build 174458), data format version 1014
+[2025-01-31 13:04:20,436]   INFO -  jetbrains.buildServer.STARTUP - OS: Linux, version 5.15.167.4-microsoft-standard-WSL2, amd64, Current user: tcuser, Time zone: GMT (UTC)
+[2025-01-31 13:04:20,436]   INFO -  jetbrains.buildServer.STARTUP - Java: 17.0.7, OpenJDK 64-Bit Server VM (17.0.7+7-LTS, mixed mode, sharing), OpenJDK Runtime Environment (17.0.7+7-LTS), Amazon.com Inc.; JVM parameters: --add-opens=jdk.management/com.sun.management.internal=ALL-UNNAMED -XX:+IgnoreUnrecognizedVMOptions -Djava.security.manager=allow --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.io=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/java.util.concurrent=ALL-UNNAMED --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED -Djava.util.logging.config.file=/opt/teamcity/conf/logging.properties -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager -Djdk.tls.ephemeralDHKeySize=2048 -Djava.protocol.handler.pkgs=org.apache.catalina.webresources -Dorg.apache.catalina.security.SecurityListener.UMASK=0027 -Xmx2g -XX:ReservedCodeCacheSize=640m -Dteamcity.configuration.path=../conf/teamcity-startup.properties -Dlog4j2.configurationFile=file:/opt/teamcity/bin/../conf/teamcity-server-log4j.xml -Dteamcity_logs=/opt/teamcity/bin/../logs -Djava.awt.headless=true -Dignore.endorsed.dirs= -Dcatalina.base=/opt/teamcity -Dcatalina.home=/opt/teamcity -Djava.io.tmpdir=/opt/teamcity/temp
+[2025-01-31 13:04:20,437]   INFO -  jetbrains.buildServer.STARTUP - Garbage collection: G1 Young Generation, G1 Old Generation
+[2025-01-31 13:04:20,437]   INFO -  jetbrains.buildServer.STARTUP - Web server version: Apache Tomcat/9.0.98
+[2025-01-31 13:04:20,438]   INFO -  jetbrains.buildServer.STARTUP - Server IP addresses: 172.23.0.2
+[2025-01-31 13:04:20,439]   INFO -  jetbrains.buildServer.STARTUP - Web server ports: 8111 (protocol: HTTP/1.1, scheme: http), 8105 (shutdown port)
+[2025-01-31 13:04:20,440]   INFO -  jetbrains.buildServer.STARTUP - Context path: "/", servlet real path: "/opt/teamcity/webapps/ROOT"
+[2025-01-31 13:04:20,444]   INFO -  jetbrains.buildServer.STARTUP - TeamCity distribution type: docker-ubuntu
+[2025-01-31 13:04:20,456]   INFO -  jetbrains.buildServer.STARTUP - TeamCity server node id: MAIN_SERVER
+[2025-01-31 13:04:20,458]   INFO -  jetbrains.buildServer.STARTUP - Version file lock was successfully obtained: /opt/teamcity/webapps/ROOT/BUILD_174458
+[2025-01-31 13:04:20,467]   INFO -  jetbrains.buildServer.STARTUP - Current stage: Looking for the TeamCity Data Directory
+[2025-01-31 13:04:20,467]   INFO -  jetbrains.buildServer.STARTUP - The TeamCity Data Directory path is determined using the environment variable TEAMCITY_DATA_PATH
+[2025-01-31 13:04:20,471]   INFO -  jetbrains.buildServer.STARTUP - The TeamCity Data Directory "/data/teamcity_server/datadir" exists
+[2025-01-31 13:04:20,471]   INFO -  jetbrains.buildServer.STARTUP - Asking user to confirm first start with the predefined TeamCity Data Directory path
+[2025-01-31 13:04:20,475]   INFO -  jetbrains.buildServer.STARTUP - Startup confirmation is required. Open TeamCity web page in the browser. Server is running at http://localhost:8111
+[2025-01-31 13:04:20,476]   INFO -  jetbrains.buildServer.STARTUP - Current stage: Confirming TeamCity first start (administrator login is required to proceed)
+[2025-01-31 13:04:37,095]   INFO -  jetbrains.buildServer.STARTUP - Current stage: Initializing the TeamCity Data Directory
+[2025-01-31 13:04:37,099]   INFO -  jetbrains.buildServer.STARTUP - Node specific data directory location: /data/teamcity_server/datadir
+[2025-01-31 13:04:37,099]   INFO -  jetbrains.buildServer.STARTUP - The TeamCity server caches directory is set to the path: /data/teamcity_server/datadir/system/caches
+[2025-01-31 13:04:37,110]   INFO - er.https.HttpsConfiguratorImpl - Https is not configured.
+[2025-01-31 13:04:37,275]   INFO -  jetbrains.buildServer.STARTUP - Downloading JDBC driver metadata from <https://download.jetbrains.com/teamcity/database-drivers/2024.12.xml?myVersion=2024.12.1&javaVersion=17.0.7>...
+[2025-01-31 13:04:38,278]   INFO -  jetbrains.buildServer.STARTUP - Current stage: Setting up database connection (administrator login is required to proceed)
+[2025-01-31 13:04:40,300]   INFO -  jetbrains.buildServer.STARTUP - JDBC loader: loading JDBC drivers (for the first time)
+[2025-01-31 13:05:37,012]   INFO -  jetbrains.buildServer.STARTUP - Generated JDBC connection string: jdbc:mysql://172.23.0.3/teamcity?user=teamcityuser&password=********
+[2025-01-31 13:05:37,015]   INFO -  jetbrains.buildServer.STARTUP - Current stage: Creating a new database
+[2025-01-31 13:05:37,015]   INFO -  jetbrains.buildServer.STARTUP - Creating a new database
+[2025-01-31 13:05:37,272]   INFO -  jetbrains.buildServer.STARTUP - Effective database connection properties:
+[2025-01-31 13:05:37,272]   INFO -  jetbrains.buildServer.STARTUP - 	allowPublicKeyRetrieval=true [connectionProperties.*]
+[2025-01-31 13:05:37,272]   INFO -  jetbrains.buildServer.STARTUP - 	alwaysSendSetIsolation=false [defaults]
+[2025-01-31 13:05:37,272]   INFO -  jetbrains.buildServer.STARTUP - 	cachePrepStmts=true [defaults]
+[2025-01-31 13:05:37,272]   INFO -  jetbrains.buildServer.STARTUP - 	characterEncoding=UTF-8 [defaults]
+[2025-01-31 13:05:37,272]   INFO -  jetbrains.buildServer.STARTUP - 	elideSetAutoCommits=true [defaults]
+[2025-01-31 13:05:37,272]   INFO -  jetbrains.buildServer.STARTUP - 	noTimezoneConversionForDateType=false [defaults]
+[2025-01-31 13:05:37,273]   INFO -  jetbrains.buildServer.STARTUP - 	noTimezoneConversionForTimeType=false [defaults]
+[2025-01-31 13:05:37,273]   INFO -  jetbrains.buildServer.STARTUP - 	prepStmtCacheSize=300 [defaults]
+[2025-01-31 13:05:37,273]   INFO -  jetbrains.buildServer.STARTUP - 	rewriteBatchedStatements=true [defaults]
+[2025-01-31 13:05:37,273]   INFO -  jetbrains.buildServer.STARTUP - 	serverTimezone=GMT [defaults]
+[2025-01-31 13:05:37,273]   INFO -  jetbrains.buildServer.STARTUP - 	useGmtMillisForDatetimes=true [defaults]
+[2025-01-31 13:05:37,273]   INFO -  jetbrains.buildServer.STARTUP - 	useJDBCCompliantTimezoneShift=true [defaults]
+[2025-01-31 13:05:37,273]   INFO -  jetbrains.buildServer.STARTUP - 	useLegacyDatetimeCode=false [defaults]
+[2025-01-31 13:05:37,273]   INFO -  jetbrains.buildServer.STARTUP - 	useLocalSessionState=true [defaults]
+[2025-01-31 13:05:37,273]   INFO -  jetbrains.buildServer.STARTUP - 	useTimezone=true [defaults]
+[2025-01-31 13:05:37,273]   INFO -  jetbrains.buildServer.STARTUP - 	userServerPrepStmts=true [defaults]
+[2025-01-31 13:05:37,984]  ERROR -  jetbrains.buildServer.STARTUP - MySQL access denied: Access denied for user 'teamcityuser'@'172.23.0.2' (using password: YES): java.sql.SQLException: Access denied for user 'teamcityuser'@'172.23.0.2' (using password: YES)
+[2025-01-31 13:05:37,984]   INFO -  jetbrains.buildServer.STARTUP - Current stage: Setting up database connection (administrator login is required to proceed)
+[2025-01-31 13:06:30,780]   INFO -  jetbrains.buildServer.STARTUP - Server shutdown event received
+[2025-01-31 13:06:30,780]   INFO -  jetbrains.buildServer.STARTUP - Current stage: TeamCity server is shutting down
+[2025-01-31 13:06:30,781]   INFO -  jetbrains.buildServer.STARTUP - Stopping the main application
+[2025-01-31 13:06:30,781]   INFO -  jetbrains.buildServer.STARTUP - The main servlet is not initialized, nothing to shut down.
+[2025-01-31 13:06:30,782]   INFO -  jetbrains.buildServer.STARTUP - Version file lock was released: /opt/teamcity/webapps/ROOT/BUILD_174458
+[2025-01-31 13:06:30,790]   INFO -  jetbrains.buildServer.STARTUP - Server shutdown complete. Uptime was 2m:10s

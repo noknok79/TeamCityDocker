@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  teamcity-server:
+    image: jetbrains/teamcity-server:latest
+    container_name: teamcity-server
+    ports:
+      - "8111:8111"
+    volumes:
+      - teamcity-server-data:/data/teamcity_server/datadir
+      - teamcity-server-logs:/opt/teamcity/logs
+    environment:
+      TEAMCITY_SERVER_MEM_OPTS: -Xmx2g -XX:ReservedCodeCacheSize=350m
+
+  mysql:
+    image: mysql:8.0
+    container_name: teamcity-mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: teamcity
+      MYSQL_USER: teamcity
+      MYSQL_PASSWORD: teamcity_password
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./mysql-init:/docker-entrypoint-initdb.d
+
+  teamcity-agent:
+    image: jetbrains/teamcity-agent:latest
+    environment:
+      SERVER_URL: http://teamcity-server:8111
+    volumes:
+      - teamcity-agent-config:/data/teamcity_agent/conf
+    deploy:
+      mode: replicated
+      replicas: 10
+    depends_on:
+      - teamcity-server
+
+volumes:
+  teamcity-server-data:
+  teamcity-server-logs:
+  mysql-data:
+  teamcity-agent-config:
+

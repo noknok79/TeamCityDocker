@@ -1,8 +1,11 @@
 version: '3.8'
 
+networks:
+  teamcity-network:
+
 services:
   teamcity-server:
-    image: jetbrains/teamcity-server
+    image: jetbrains/teamcity-server:latest
     container_name: teamcity-server
     ports:
       - "8111:8111"
@@ -11,9 +14,16 @@ services:
       - teamcity-server-logs:/opt/teamcity/logs
     environment:
       - TEAMCITY_SERVER_MEM_OPTS=-Xmx2g -XX:ReservedCodeCacheSize=350m
+    networks:
+      - teamcity-network
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8111 || exit 1"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
 
   mysql:
-    image: mysql:latest
+    image: mysql:8.0
     container_name: mysql
     ports:
       - "3306:3306"
@@ -26,16 +36,49 @@ services:
       - mysql-data:/var/lib/mysql
       - ./mysql-init:/docker-entrypoint-initdb.d
       - ./mysql-entrypoint.sh:/docker-entrypoint.sh
+    networks:
+      - teamcity-network
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost || exit 1"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
 
-  teamcity-agent:
-    image: jetbrains/teamcity-agent
-    container_name: teamcity-agent
+  teamcity-agent-1:
+    image: jetbrains/teamcity-agent:latest
+    container_name: teamcity-agent-1
     environment:
       - SERVER_URL=http://teamcity-server:8111
     volumes:
-      - teamcity-agent-config:/data/teamcity_agent/conf
+      - teamcity-agent-config-1:/data/teamcity_agent/conf-1
     depends_on:
       - teamcity-server
+    networks:
+      - teamcity-network
+
+  teamcity-agent-2:
+    image: jetbrains/teamcity-agent:latest
+    container_name: teamcity-agent-2
+    environment:
+      - SERVER_URL=http://teamcity-server:8111
+    volumes:
+      - teamcity-agent-config-2:/data/teamcity_agent/conf-2
+    depends_on:
+      - teamcity-server
+    networks:
+      - teamcity-network
+
+  teamcity-agent-3:
+    image: jetbrains/teamcity-agent:latest
+    container_name: teamcity-agent-3
+    environment:
+      - SERVER_URL=http://teamcity-server:8111
+    volumes:
+      - teamcity-agent-config-3:/data/teamcity_agent/conf-3
+    depends_on:
+      - teamcity-server
+    networks:
+      - teamcity-network
 
   print-volumes:
     image: busybox
@@ -44,26 +87,36 @@ services:
       - teamcity-server-logs:/opt/teamcity/logs
       - mysql-data:/var/lib/mysql
       - ./mysql-init:/docker-entrypoint-initdb.d
-      - teamcity-agent-config:/data/teamcity_agent/conf
+      - teamcity-agent-config-1:/data/teamcity_agent/conf-1
+      - teamcity-agent-config-2:/data/teamcity_agent/conf-2
+      - teamcity-agent-config-3:/data/teamcity_agent/conf-3
       - ./print-volumes.sh:/print-volumes.sh
     entrypoint: /print-volumes.sh
+    networks:
+      - teamcity-network
 
   cleanup-volumes:
     image: busybox
     command: >
-      sh -c "echo 'Cleaning up local volume storage...'; 
-             rm -rf /data/teamcity_server/datadir /opt/teamcity/logs /var/lib/mysql /docker-entrypoint-initdb.d /data/teamcity_agent/conf; 
+      sh -c "echo 'Cleaning up local volume storage...';
+             rm -rf /data/teamcity_server/datadir /opt/teamcity/logs /var/lib/mysql /docker-entrypoint-initdb.d /data/teamcity_agent/conf;
              sleep 3600"
     volumes:
       - teamcity-server-data:/data/teamcity_server/datadir
       - teamcity-server-logs:/opt/teamcity/logs
       - mysql-data:/var/lib/mysql
       - ./mysql-init:/docker-entrypoint-initdb.d
-      - teamcity-agent-config:/data/teamcity_agent/conf
+      - teamcity-agent-config-1:/data/teamcity_agent/conf-1
+      - teamcity-agent-config-2:/data/teamcity_agent/conf-2
+      - teamcity-agent-config-3:/data/teamcity_agent/conf-3
+    networks:
+      - teamcity-network
 
 volumes:
   teamcity-server-data:
   teamcity-server-logs:
   mysql-data:
-  teamcity-agent-config:
+  teamcity-agent-config-1:
+  teamcity-agent-config-2:
+  teamcity-agent-config-3:
 
