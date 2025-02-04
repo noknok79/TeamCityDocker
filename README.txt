@@ -36,72 +36,121 @@ You can now use TeamCity as your CICD Tools.
 
 
 
-version: '3.8' # Specifies the version of the Docker Compose file format to use.
+# Docker Compose file version declaration
+version: '3.8'
 
-services: 
-  teamcity-server: # Defines a service named "teamcity-server".
-    image: jetbrains/teamcity-server # The Docker image to use for this service.
-    container_name: teamcity-server # Sets a custom name for the container.
+# Network Configuration
+# Creates an isolated network for all TeamCity components to communicate securely
+networks:
+  teamcity-network:
+    driver: bridge  # Using bridge network driver for local development
+
+services:
+  # TeamCity Server Service
+  # This is the main application server that:
+  # - Hosts the web interface
+  # - Manages build configurations
+  # - Coordinates build agents
+  # - Stores build history and artifacts
+  teamcity-server:
+    image: jetbrains/teamcity-server:latest  # Official TeamCity server image
+    container_name: teamcity-server  # Explicit container name for easy reference
     ports:
-      - "8111:8111" # Maps port 8111 on the host to port 8111 on the container.
+      - "8111:8111"  # Maps host port to container port for web UI access
     volumes:
-      - teamcity-server-data:/data/teamcity_server/datadir # Persists the TeamCity server data directory.
-      - teamcity-server-logs:/opt/teamcity/logs # Persists the TeamCity server logs directory.
+      # Persistent data storage mapping
+      - teamcity-server-data:/data/teamcity_server/datadir  # Stores configurations, build history, and plugins
+      - teamcity-server-logs:/opt/teamcity/logs  # Stores server logs for debugging
     environment:
-      - TEAMCITY_SERVER_MEM_OPTS=-Xmx2g -XX:ReservedCodeCacheSize=350m # Sets Java memory options for the TeamCity server.
+      # JVM memory optimization settings
+      # Xmx2g: Maximum heap size of 2GB
+      # ReservedCodeCacheSize: Cache size for JIT-compiled code
+      - TEAMCITY_SERVER_MEM_OPTS=-Xmx2g -XX:ReservedCodeCacheSize=350m
+    networks:
+      - teamcity-network  # Connects to the isolated network
+    restart: unless-stopped  # Automatic restart policy
+    healthcheck:  # Monitors server health
+      test: ["CMD-SHELL", "curl -f http://localhost:8111 || exit 1"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
 
-  mysql: # Defines a service named "mysql".
-    image: mysql:latest # The Docker image to use for this service.
-    container_name: mysql # Sets a custom name for the container.
+  # MySQL Database Service
+  # Provides persistent storage for TeamCity server data including:
+  # - Build configurations
+  # - User data
+  # - Build results
+  # - Other operational data
+  mysql:
+    image: mysql:8.0  # Official MySQL 8.0 image
+    container_name: mysql
     ports:
-      - "3306:3306" # Maps port 3306 on the host to port 3306 on the container.
+      - "3306:3306"  # Exposes MySQL port for external connections if needed
     environment:
-      MYSQL_ROOT_PASSWORD: root_password # Sets the MySQL root password.
-      MYSQL_DATABASE: teamcity # Creates a database named "teamcity".
-      MYSQL_USER: teamcity # Creates a MySQL user named "teamcity".
-      MYSQL_PASSWORD: teamcity_password # Sets the password for the "teamcity" user.
+      # Database configuration
+      MYSQL_ROOT_PASSWORD: root_password  # Root password (change in production)
+      MYSQL_DATABASE: teamcity  # Creates initial database
+      MYSQL_USER: teamcity  # Creates application user
+      MYSQL_PASSWORD: teamcity_password  # User password (change in production)
     volumes:
-      - mysql-data:/var/lib/mysql # Persists the MySQL data directory.
-      - ./mysql-init:/docker-entrypoint-initdb.d # Mounts initialization scripts from the host directory.
-      - ./mysql-entrypoint.sh:/docker-entrypoint.sh # Mounts a custom entrypoint script from the host directory.
+      - mysql-data:/var/lib/mysql  # Persistent database storage
+      - ./mysql-init:/docker-entrypoint-initdb.d  # Initial DB setup scripts
+      - ./mysql-entrypoint.sh:/docker-entrypoint.sh  # Custom entrypoint script
+    networks:
+      - teamcity-network
+    restart: unless-stopped
+    healthcheck:  # Monitors database health
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost || exit 1"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
 
-  teamcity-agent: # Defines a service named "teamcity-agent".
-    image: jetbrains/teamcity-agent # The Docker image to use for this service.
-    container_name: teamcity-agent # Sets a custom name for the container.
+  # TeamCity Build Agent
+  # Responsible for:
+  # - Executing build jobs
+  # - Running tests
+  # - Deploying applications
+  # - Reporting results back to the server
+  teamcity-agent-1:
+    image: jetbrains/teamcity-agent:latest  # Official TeamCity agent image
+    container_name: teamcity-agent-1
     environment:
-      - SERVER_URL=http://teamcity-server:8111 # Sets the URL of the TeamCity server.
+      - SERVER_URL=http://teamcity-server:8111  # Connection to TeamCity server
     volumes:
-      - teamcity-agent-config:/data/teamcity_agent/conf # Persists the TeamCity agent configuration directory.
+      - teamcity-agent-config-1:/data/teamcity_agent/conf  # Agent-specific settings
     depends_on:
-      - teamcity-server # Ensures that the "teamcity-server" service is started before this service.
+      - teamcity-server  # Ensures server is started first
+    networks:
+      - teamcity-network
+    restart: unless-stopped
 
-  print-volumes: # Defines a utility service for printing the list of volumes and their contents.
-    image: busybox # The Docker image to use for this utility service (busybox is a lightweight image for utility tasks).
+  # Utility Services
+  # Service for debugging volume contents
+  print-volumes:
+    image: busybox
     volumes:
-      - teamcity-server-data:/data/teamcity_server/datadir # Mounts the volume used by the TeamCity server data directory.
-      - teamcity-server-logs:/opt/teamcity/logs # Mounts the volume used by the TeamCity server logs directory.
-      - mysql-data:/var/lib/mysql # Mounts the volume used by the MySQL data directory.
-      - ./mysql-init:/docker-entrypoint-initdb.d # Mounts the initialization scripts from the host directory.
-      - teamcity-agent-config:/data/teamcity_agent/conf # Mounts the volume used by the TeamCity agent configuration directory.
-      - ./print-volumes.sh:/print-volumes.sh # Mounts a custom script from the host directory to print volume contents.
-    entrypoint: /print-volumes.sh # Specifies the entry point to run the custom script.
+      - teamcity-server-data:/data/teamcity_server/datadir
+      - teamcity-server-logs:/opt/teamcity/logs
+    entrypoint: /print-volumes.sh
+    networks:
+      - teamcity-network
 
-  cleanup-volumes: # Defines a utility service for cleaning up local volume storage.
-    image: busybox # The Docker image to use for this utility service (busybox is a lightweight image for utility tasks).
+  # Maintenance service for cleaning up data
+  cleanup-volumes:
+    image: busybox
     command: >
-      sh -c "echo 'Cleaning up local volume storage...'; 
-             rm -rf /data/teamcity_server/datadir /opt/teamcity/logs /var/lib/mysql /docker-entrypoint-initdb.d /data/teamcity_agent/conf; 
-             sleep 3600" # Custom command to delete volume contents and keep the container running for an hour.
+      sh -c "echo 'Cleaning up local volume storage...';
+             rm -rf /data/teamcity_server/datadir /opt/teamcity/logs /var/lib/mysql /docker-entrypoint-initdb.d /data/teamcity_agent/conf;
+             sleep 3600"
     volumes:
-      - teamcity-server-data:/data/teamcity_server/datadir # Mounts the volume used by the TeamCity server data directory.
-      - teamcity-server-logs:/opt/teamcity/logs # Mounts the volume used by the TeamCity server logs directory.
-      - mysql-data:/var/lib/mysql # Mounts the volume used by the MySQL data directory.
-      - ./mysql-init:/docker-entrypoint-initdb.d # Mounts the initialization scripts from the host directory.
-      - teamcity-agent-config:/data/teamcity_agent/conf # Mounts the volume used by the TeamCity agent configuration directory.
+      - teamcity-server-data:/data/teamcity_server/datadir
+    networks:
+      - teamcity-network
 
-volumes: # Defines the named volumes to persist data.
-  teamcity-server-data: # Volume for TeamCity server data directory.
-  teamcity-server-logs: # Volume for TeamCity server logs directory.
-  mysql-data: # Volume for MySQL data directory.
-  teamcity-agent-config: # Volume for TeamCity agent configuration directory.
-
+# Named Volumes Configuration
+# Defines persistent storage locations that survive container restarts
+volumes:
+  teamcity-server-data:  # Persistent TeamCity server data
+  teamcity-server-logs:  # Server logs storage
+  mysql-data:  # Database files storage
+  teamcity-agent-config-1:  # Agent 1 configuration storage
