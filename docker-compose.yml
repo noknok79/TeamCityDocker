@@ -53,7 +53,7 @@ services:
     environment:
       - SERVER_URL=http://teamcity-server:8111
     volumes:
-      - teamcity-agent-config-1:/data/teamcity_agent/conf
+      - teamcity-agent-config-1:/data/teamcity_agent-1/conf
     depends_on:
       - teamcity-server
     networks:
@@ -66,7 +66,7 @@ services:
     environment:
       - SERVER_URL=http://teamcity-server:8111
     volumes:
-      - teamcity-agent-config-2:/data/teamcity_agent/conf
+      - teamcity-agent-config-2:/data/teamcity_agent-2/conf
     depends_on:
       - teamcity-server
     networks:
@@ -79,98 +79,7 @@ services:
     environment:
       - SERVER_URL=http://teamcity-server:8111
     volumes:
-      - teamcity-agent-config-3:/data/teamcity_agent/conf
-    depends_on:
-      - teamcity-server
-    networks:
-      - teamcity-network
-    restart: unless-stopped
-
-  teamcity-agent-4:
-    image: jetbrains/teamcity-agent:latest
-    container_name: teamcity-agent-4
-    environment:
-      - SERVER_URL=http://teamcity-server:8111
-    volumes:
-      - teamcity-agent-config-4:/data/teamcity_agent/conf
-    depends_on:
-      - teamcity-server
-    networks:
-      - teamcity-network
-    restart: unless-stopped
-
-  teamcity-agent-5:
-    image: jetbrains/teamcity-agent:latest
-    container_name: teamcity-agent-5
-    environment:
-      - SERVER_URL=http://teamcity-server:8111
-    volumes:
-      - teamcity-agent-config-5:/data/teamcity_agent/conf
-    depends_on:
-      - teamcity-server
-    networks:
-      - teamcity-network
-    restart: unless-stopped
-
-  teamcity-agent-6:
-    image: jetbrains/teamcity-agent:latest
-    container_name: teamcity-agent-6
-    environment:
-      - SERVER_URL=http://teamcity-server:8111
-    volumes:
-      - teamcity-agent-config-6:/data/teamcity_agent/conf
-    depends_on:
-      - teamcity-server
-    networks:
-      - teamcity-network
-    restart: unless-stopped
-
-  teamcity-agent-7:
-    image: jetbrains/teamcity-agent:latest
-    container_name: teamcity-agent-7
-    environment:
-      - SERVER_URL=http://teamcity-server:8111
-    volumes:
-      - teamcity-agent-config-7:/data/teamcity_agent/conf
-    depends_on:
-      - teamcity-server
-    networks:
-      - teamcity-network
-    restart: unless-stopped
-
-  teamcity-agent-8:
-    image: jetbrains/teamcity-agent:latest
-    container_name: teamcity-agent-8
-    environment:
-      - SERVER_URL=http://teamcity-server:8111
-    volumes:
-      - teamcity-agent-config-8:/data/teamcity_agent/conf
-    depends_on:
-      - teamcity-server
-    networks:
-      - teamcity-network
-    restart: unless-stopped
-
-  teamcity-agent-9:
-    image: jetbrains/teamcity-agent:latest
-    container_name: teamcity-agent-9
-    environment:
-      - SERVER_URL=http://teamcity-server:8111
-    volumes:
-      - teamcity-agent-config-9:/data/teamcity_agent/conf
-    depends_on:
-      - teamcity-server
-    networks:
-      - teamcity-network
-    restart: unless-stopped
-
-  teamcity-agent-10:
-    image: jetbrains/teamcity-agent:latest
-    container_name: teamcity-agent-10
-    environment:
-      - SERVER_URL=http://teamcity-server:8111
-    volumes:
-      - teamcity-agent-config-10:/data/teamcity_agent/conf
+      - teamcity-agent-config-3:/data/teamcity_agent-3/conf
     depends_on:
       - teamcity-server
     networks:
@@ -184,16 +93,9 @@ services:
       - teamcity-server-logs:/opt/teamcity/logs
       - mysql-data:/var/lib/mysql
       - ./mysql-init:/docker-entrypoint-initdb.d
-      - teamcity-agent-config-1:/data/teamcity_agent/conf
-      - teamcity-agent-config-2:/data/teamcity_agent/conf
-      - teamcity-agent-config-3:/data/teamcity_agent/conf
-      - teamcity-agent-config-4:/data/teamcity_agent/conf
-      - teamcity-agent-config-5:/data/teamcity_agent/conf
-      - teamcity-agent-config-6:/data/teamcity_agent/conf
-      - teamcity-agent-config-7:/data/teamcity_agent/conf
-      - teamcity-agent-config-8:/data/teamcity_agent/conf
-      - teamcity-agent-config-9:/data/teamcity_agent/conf
-      - teamcity-agent-config-10:/data/teamcity_agent/conf
+      - teamcity-agent-config-1:/data/teamcity_agent-1/conf
+      - teamcity-agent-config-2:/data/teamcity_agent-2/conf
+      - teamcity-agent-config-3:/data/teamcity_agent-3/conf
       - ./print-volumes.sh:/print-volumes.sh
     entrypoint: /print-volumes.sh
     networks:
@@ -203,23 +105,16 @@ services:
     image: busybox
     command: >
       sh -c "echo 'Cleaning up local volume storage...';
-             rm -rf /data/teamcity_server/datadir /opt/teamcity/logs /var/lib/mysql /docker-entrypoint-initdb.d /data/teamcity_agent/conf;
+             rm -rf /data/teamcity_server/datadir /opt/teamcity/logs /var/lib/mysql /docker-entrypoint-initdb.d /data/teamcity_agent-1/conf /data/teamcity_agent-2/conf /data/teamcity_agent-3/conf;
              sleep 3600"
     volumes:
       - teamcity-server-data:/data/teamcity_server/datadir
       - teamcity-server-logs:/opt/teamcity/logs
       - mysql-data:/var/lib/mysql
       - ./mysql-init:/docker-entrypoint-initdb.d
-      - teamcity-agent-config-1:/data/teamcity_agent/conf
-      - teamcity-agent-config-2:/data/teamcity_agent/conf
-      - teamcity-agent-config-3:/data/teamcity_agent/conf
-      - teamcity-agent-config-4:/data/teamcity_agent/conf
-      - teamcity-agent-config-5:/data/teamcity_agent/conf
-      - teamcity-agent-config-6:/data/teamcity_agent/conf
-      - teamcity-agent-config-7:/data/teamcity_agent/conf
-      - teamcity-agent-config-8:/data/teamcity_agent/conf
-      - teamcity-agent-config-9:/data/teamcity_agent/conf
-      - teamcity-agent-config-10:/data/teamcity_agent/conf
+      - teamcity-agent-config-1:/data/teamcity_agent-1/conf
+      - teamcity-agent-config-2:/data/teamcity_agent-2/conf
+      - teamcity-agent-config-3:/data/teamcity_agent-3/conf
     networks:
       - teamcity-network
 
@@ -230,11 +125,4 @@ volumes:
   teamcity-agent-config-1:
   teamcity-agent-config-2:
   teamcity-agent-config-3:
-  teamcity-agent-config-4:
-  teamcity-agent-config-5:
-  teamcity-agent-config-6:
-  teamcity-agent-config-7:
-  teamcity-agent-config-8:
-  teamcity-agent-config-9:
-  teamcity-agent-config-10:
 
