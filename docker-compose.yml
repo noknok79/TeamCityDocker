@@ -1,5 +1,4 @@
 version: '3.8'
-
 networks:
   teamcity-network:
     driver: bridge
@@ -17,12 +16,15 @@ services:
       - TEAMCITY_SERVER_MEM_OPTS=-Xmx2g -XX:ReservedCodeCacheSize=350m
     networks:
       - teamcity-network
-    restart: unless-stopped
+    restart: always
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:8111 || exit 1"]
-      interval: 1m30s
+      interval: 1m
       timeout: 10s
       retries: 3
+    depends_on:
+      - mysql
+    init: true
 
   mysql:
     image: mysql:8.0
@@ -30,22 +32,22 @@ services:
     ports:
       - "3306:3306"
     environment:
-      MYSQL_ROOT_PASSWORD: root_password
-      MYSQL_DATABASE: teamcity
-      MYSQL_USER: teamcity
-      MYSQL_PASSWORD: teamcity_password
+      - MYSQL_ROOT_PASSWORD=root_password
+      - MYSQL_DATABASE=teamcity
+      - MYSQL_USER=teamcity
+      - MYSQL_PASSWORD=teamcity_password
     volumes:
       - mysql-data:/var/lib/mysql
       - ./mysql-init:/docker-entrypoint-initdb.d
-      - ./mysql-entrypoint.sh:/docker-entrypoint.sh
     networks:
       - teamcity-network
-    restart: unless-stopped
+    restart: always
     healthcheck:
       test: ["CMD-SHELL", "mysqladmin ping -h localhost || exit 1"]
-      interval: 1m30s
+      interval: 1m
       timeout: 10s
       retries: 3
+    init: true
 
   teamcity-agent-1:
     image: jetbrains/teamcity-agent:latest
@@ -58,7 +60,8 @@ services:
       - teamcity-server
     networks:
       - teamcity-network
-    restart: unless-stopped
+    restart: always
+    init: true
 
   teamcity-agent-2:
     image: jetbrains/teamcity-agent:latest
@@ -71,7 +74,8 @@ services:
       - teamcity-server
     networks:
       - teamcity-network
-    restart: unless-stopped
+    restart: always
+    init: true
 
   teamcity-agent-3:
     image: jetbrains/teamcity-agent:latest
@@ -84,7 +88,9 @@ services:
       - teamcity-server
     networks:
       - teamcity-network
-    restart: unless-stopped
+    restart: always
+    init: true
+
 
   print-volumes:
     image: busybox
